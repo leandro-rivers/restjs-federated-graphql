@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType, Directive } from "@nestjs/graphql";
 import { v4 as uuidv4 } from 'uuid';
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 export class Order {
   @Field(() => ID)
   id: string;

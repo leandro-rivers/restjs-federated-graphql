@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Order } from './entities';
+import { CreateOrderInput } from './dtos';
 
 @Injectable()
 export class OrdersService {
@@ -22,7 +23,7 @@ export class OrdersService {
     },
     {
       id: '7c702257-85d2-49dd-a7c9-2e7584c8b756',
-      customerId: '82806af9-3485-4e4f-98f9-467f6557c284',
+      customerId: '82806af9-3485-4e4f-98f9-467f6557c2',
       productName: 'Keyboard',
       quantity: 1,
       total: 100,
@@ -38,8 +39,8 @@ export class OrdersService {
     return this.orders.find(order => order.id === id) || null;
   }
 
-  async create(orderData: Omit<Order, 'id'>): Promise<Order> {
-    const newOrder = Order.create(orderData);
+  async create(input: CreateOrderInput): Promise<Order> {
+    const newOrder = Order.create(input);
     this.orders.push(newOrder);
     return newOrder;
   }

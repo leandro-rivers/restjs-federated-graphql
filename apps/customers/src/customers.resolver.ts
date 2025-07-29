@@ -1,4 +1,4 @@
-import { Resolver, Query, ID, Args } from '@nestjs/graphql';
+import { Resolver, Query, ID, Args, ResolveReference } from '@nestjs/graphql';
 import { Customer } from './entitites';
 import { CustomersService } from './customers.service';
 
@@ -14,5 +14,10 @@ export class CustomersResolver {
   @Query(() => Customer)
   async customer(@Args('id', { type: () => ID }) id: string): Promise<Customer> {
     return this.customersService.findOne(id);
+  }
+
+  @ResolveReference()
+  async resolveReference(reference: { __typename: string; id: string }): Promise<Customer> {
+    return this.customersService.findOne(reference.id);
   }
 } 

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
-import { OrdersResolver } from './orders.resolver';
+import { OrdersResolver, CustomerResolver } from './orders.resolver';
 import { OrdersService } from './orders.service';
 
 @Module({
@@ -14,6 +14,6 @@ import { OrdersService } from './orders.service';
     }),
   ],
   controllers: [],
-  providers: [OrdersResolver, OrdersService],
+  providers: [OrdersResolver, CustomerResolver, OrdersService],
 })
 export class OrdersModule {}
