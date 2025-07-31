@@ -18,9 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/federated-graphql-monorepo/test/jest-e2e.json",
-    "dev:gateway": "nest start gateway --watch",
-    "dev:orders": "nest start orders --watch",
-    "dev:customers": "nest start customers --watch",
+    "dev:gateway": "NODE_ENV=local nest start gateway --watch",
+    "dev:orders": "NODE_ENV=local nest start orders --watch",
+    "dev:customers": "NODE_ENV=local nest start customers --watch",
     "dev:all": "concurrently \"yarn dev:gateway\" \"yarn dev:orders\" \"yarn dev:customers\""
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@apollo/subgraph": "^2.11.2",
     "@nestjs/apollo": "^13.1.0",
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/graphql": "^13.1.0",
     "@nestjs/platform-express": "^11.0.1",

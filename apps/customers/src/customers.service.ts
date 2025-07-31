@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Customer } from './entitites';
+import { Config } from './config/configuration';
 
 @Injectable()
 export class CustomersService {
+  private readonly logger = new Logger(CustomersService.name);
+  constructor(private configService: ConfigService<Config>) {
+  }
+
   private customers: Customer[] = [
     {
       id: '82806af9-3485-4e4f-98f9-467f6557c2',
@@ -25,10 +31,12 @@ export class CustomersService {
   ];
 
   async findAll(): Promise<Customer[]> {
+    this.logger.debug('Fetching all customers...');
     return this.customers;
   }
 
   async findOne(id: string): Promise<Customer> {
+    this.logger.debug(`Fetching customer with id: ${id}`);
     const customer = this.customers.find(customer => customer.id === id);
     if (!customer) {
       throw new NotFoundException(`Customer not found with id ${id}`);

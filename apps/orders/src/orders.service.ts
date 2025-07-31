@@ -1,9 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Order } from './entities';
 import { CreateOrderInput } from './dtos';
+import { ConfigService } from '@nestjs/config';
+import { Config } from './config/configuration';
 
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
+  constructor(private configService: ConfigService<Config>) {
+  }
+
   private orders: Order[] = [
     {
       id: '7ba4ce1e-800e-4b45-b7b1-10ea67e14c4b',
@@ -32,14 +39,17 @@ export class OrdersService {
   ];
 
   async findAll(): Promise<Order[]> {
+    this.logger.debug('Finding all orders');
     return this.orders;
   }
 
   async findOne(id: string): Promise<Order | null> {
+    this.logger.debug(`Finding order with id: ${id}`);
     return this.orders.find(order => order.id === id) || null;
   }
 
   async create(input: CreateOrderInput): Promise<Order> {
+    this.logger.debug(`Creating order with input: ${JSON.stringify(input)}`);
     const newOrder = Order.create(input);
     this.orders.push(newOrder);
     return newOrder;
